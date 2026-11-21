@@ -3,219 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ BlitzDash | Community Hub</title>
-    
-    <!-- Meta tags for Discord / Twitter Previews -->
-    <meta name="description" content="Welcome to the official BlitzDash community hub crafted by MiniBl1tz.">
-    <meta property="og:title" content="⚡ BlitzDash Hub">
-    <meta property="og:description" content="Join our community, check the rules, and grab our latest links!">
-    <meta name="theme-color" content="#38bdf8">
+    <title>NexusPortal | Next-Gen Community Gateway</title>
 
-    <!-- Modern Typography -->
+    <meta name="description" content="Next-generation community portal and resource hub. Powered by NexusPortal.">
+    <meta property="og:title" content="NexusPortal — Community Gateway">
+    <meta property="og:description" content="Access official channels, real-time platform metrics, and community guidelines.">
+    <meta name="theme-color" content="#0ea5e9">
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #090d16;
-            --card-bg: rgba(16, 24, 39, 0.75);
-            --border: rgba(56, 189, 248, 0.2);
-            --primary: #38bdf8;
-            --primary-glow: rgba(56, 189, 248, 0.35);
-            --accent: #818cf8;
+            --primary: #0ea5e9;
+            --primary-rgb: 14, 165, 233;
+            --accent: #6366f1;
+            --bg-base: #030712;
+            --surface: rgba(15, 23, 42, 0.65);
+            --surface-border: rgba(255, 255, 255, 0.08);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --success: #34d399;
+            --success: #10b981;
+        }
+
+        /* Preset Themes */
+        body[data-theme="violet"] {
+            --primary: #a855f7;
+            --primary-rgb: 168, 85, 247;
+            --accent: #ec4899;
+        }
+
+        body[data-theme="emerald"] {
+            --primary: #10b981;
+            --primary-rgb: 16, 185, 129;
+            --accent: #06b6d4;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 85% 30%, rgba(129, 140, 248, 0.08) 0%, transparent 50%);
+            background-color: var(--bg-base);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px;
-        }
-
-        .hub-card {
-            width: 100%;
-            max-width: 440px;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 36px 28px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px var(--primary-glow);
-            text-align: center;
+            padding: 20px 16px;
             position: relative;
+            overflow-x: hidden;
         }
 
-        /* Avatar / Icon */
-        .avatar-wrap {
-            position: relative;
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 16px;
-        }
-
-        .avatar {
+        /* Interactive Particle Background */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #38bdf8, #6366f1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-            box-shadow: 0 8px 24px var(--primary-glow);
-            border: 3px solid rgba(255, 255, 255, 0.2);
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* Status Badge */
-        .status-badge {
+        .portal-card {
+            width: 100%;
+            max-width: 460px;
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 28px;
+            padding: 38px 28px 28px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7),
+                        0 0 50px rgba(var(--primary-rgb), 0.15);
+            position: relative;
+            z-index: 10;
+            animation: cardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Top Controls */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .telemetry-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            background: rgba(52, 211, 153, 0.1);
-            border: 1px solid rgba(52, 211, 153, 0.3);
-            color: var(--success);
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-size: 0.8rem;
+            gap: 8px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
             font-weight: 600;
-            margin-bottom: 12px;
+            color: var(--success);
+            font-family: 'JetBrains Mono', monospace;
         }
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            background-color: var(--success);
+        .pulse-indicator {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
             border-radius: 50%;
-            box-shadow: 0 0 8px var(--success);
-            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px var(--success);
+            animation: blink 2s infinite;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.3); opacity: 1; }
-            100% { transform: scale(0.95); opacity: 0.8; }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
-        h1 {
-            font-size: 1.8rem;
+        /* Theme Selector */
+        .theme-selector {
+            display: flex;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--surface-border);
+            padding: 4px;
+            border-radius: 100px;
+        }
+
+        .theme-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .theme-dot:hover { transform: scale(1.2); }
+        .theme-cyan { background: #0ea5e9; }
+        .theme-violet { background: #a855f7; }
+        .theme-emerald { background: #10b981; }
+
+        /* Custom Vector Logo */
+        .logo-wrap {
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .logo-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 16px rgba(var(--primary-rgb), 0.5));
+            transition: all 0.3s ease;
+        }
+
+        /* Branding */
+        .title-block {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .main-title {
+            font-size: 2rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 40%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 6px;
         }
 
         .subtitle {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            margin-bottom: 28px;
+            line-height: 1.4;
         }
 
-        /* Buttons List */
-        .links {
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .metric-item .val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .metric-item .lbl {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+
+        /* Dynamic Buttons */
+        .links-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .link-btn {
+        .action-btn {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
             padding: 14px 18px;
-            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            color: var(--text-main);
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .link-btn:hover {
-            background: rgba(56, 189, 248, 0.1);
-            border-color: var(--primary);
+        .action-btn:hover {
+            background: rgba(var(--primary-rgb), 0.08);
+            border-color: rgba(var(--primary-rgb), 0.4);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px var(--primary-glow);
+            box-shadow: 0 8px 24px rgba(var(--primary-rgb), 0.2);
         }
 
-        .btn-left {
+        .btn-content {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
-        .btn-arrow {
+        .btn-icon {
+            font-size: 1.25rem;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 10px;
+            border: 1px solid var(--surface-border);
+        }
+
+        .btn-text .btn-label {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .btn-text .btn-desc {
+            font-size: 0.75rem;
             color: var(--text-muted);
-            transition: transform 0.2s ease;
         }
 
-        .link-btn:hover .btn-arrow {
+        .btn-chevron {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+
+        .action-btn:hover .btn-chevron {
             transform: translateX(4px);
             color: var(--primary);
         }
 
         /* Footer */
-        footer {
+        .card-footer {
             margin-top: 28px;
-            padding-top: 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 20px;
+            border-top: 1px solid var(--surface-border);
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
             font-size: 0.8rem;
             color: var(--text-muted);
         }
 
-        footer a {
+        .card-footer a {
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
         }
 
-        .share-btn {
-            background: none;
-            border: none;
+        .share-pill {
+            background: transparent;
+            border: 1px solid var(--surface-border);
             color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
             cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 4px;
-            font-size: 0.8rem;
-            transition: color 0.2s;
+            gap: 6px;
         }
 
-        .share-btn:hover {
+        .share-pill:hover {
             color: var(--text-main);
+            border-color: var(--primary);
         }
 
-        /* Modal (Rules Window) */
-        .modal-overlay {
+        /* Modal Overlay */
+        .modal-backdrop {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
+            inset: 0;
+            background: rgba(3, 7, 18, 0.75);
+            backdrop-filter: blur(12px);
             display: none;
             align-items: center;
             justify-content: center;
@@ -223,19 +337,19 @@
             z-index: 100;
         }
 
-        .modal {
-            background: #111827;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            max-width: 400px;
+        .modal-panel {
+            background: #0f172a;
+            border: 1px solid var(--surface-border);
+            border-radius: 24px;
+            max-width: 420px;
             width: 100%;
-            padding: 24px;
-            text-align: left;
-            animation: popIn 0.25s ease-out;
+            padding: 28px;
+            animation: modalEnter 0.2s ease-out;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
 
-        @keyframes popIn {
-            from { transform: scale(0.9); opacity: 0; }
+        @keyframes modalEnter {
+            from { transform: scale(0.95); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
 
@@ -243,16 +357,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
-        .modal-title {
-            font-size: 1.2rem;
+        .modal-header h3 {
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--primary);
         }
 
-        .close-btn {
+        .modal-close {
             background: none;
             border: none;
             color: var(--text-muted);
@@ -260,167 +373,355 @@
             cursor: pointer;
         }
 
-        .rules-list {
-            list-style: none;
+        .rules-timeline {
             display: flex;
             flex-direction: column;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .rule-entry {
+            display: flex;
             gap: 12px;
-            font-size: 0.9rem;
-            color: #cbd5e1;
+            font-size: 0.88rem;
+            line-height: 1.4;
         }
 
-        .rules-list li strong {
-            color: var(--text-main);
+        .rule-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: 700;
         }
 
-        /* Toast notification */
-        .toast {
+        /* Toast system */
+        .toast-system {
             position: fixed;
-            bottom: 24px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: #1e293b;
-            color: #38bdf8;
-            border: 1px solid #38bdf8;
-            padding: 10px 20px;
-            border-radius: 999px;
-            font-weight: 600;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--primary);
+            color: var(--text-main);
+            padding: 10px 22px;
+            border-radius: 100px;
             font-size: 0.85rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease;
-            z-index: 200;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             pointer-events: none;
         }
 
-        .toast.show {
+        .toast-system.active {
             transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
 <body>
 
-    <main class="hub-card">
-        <!-- Community Status -->
-        <div class="status-badge">
-            <span class="status-dot"></span>
-            <span>Community Live</span>
+    <!-- Particle canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <main class="portal-card">
+        <!-- Card Header -->
+        <div class="card-header">
+            <div class="telemetry-badge">
+                <span class="pulse-indicator"></span>
+                <span id="cfgStatus">OPERATIONAL</span>
+            </div>
+            
+            <!-- Quick Theme Switcher -->
+            <div class="theme-selector" title="Switch Theme Accent">
+                <button class="theme-dot theme-cyan" onclick="setTheme('default')"></button>
+                <button class="theme-dot theme-violet" onclick="setTheme('violet')"></button>
+                <button class="theme-dot theme-emerald" onclick="setTheme('emerald')"></button>
+            </div>
         </div>
 
-        <!-- Avatar -->
-        <div class="avatar-wrap">
-            <div class="avatar">⚡</div>
+        <!-- Custom Scalable Vector Logo -->
+        <div class="logo-wrap">
+            <svg class="logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="2" stroke-opacity="0.1" />
+                <polygon points="50,14 82,32 82,68 50,86 18,68 18,32" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="rgba(var(--primary-rgb), 0.05)" />
+                <path d="M50 26 L70 38 V62 L50 74 L30 62 V38 Z" fill="var(--primary)" fill-opacity="0.25" stroke="var(--accent)" stroke-width="2" />
+                <circle cx="50" cy="50" r="6" fill="#ffffff" />
+            </svg>
         </div>
 
-        <h1>BlitzDash</h1>
-        <p class="subtitle">Official hub created by <strong>MiniBl1tz</strong></p>
-
-        <!-- Interactive Action Buttons -->
-        <div class="links">
-            <!-- Discord Copy Button -->
-            <button class="link-btn" onclick="copyDiscord()">
-                <div class="btn-left">
-                    <span>💬</span>
-                    <span>Copy Discord Invite</span>
-                </div>
-                <span class="btn-arrow">📋</span>
-            </button>
-
-            <!-- Rules Modal Trigger -->
-            <button class="link-btn" onclick="toggleRules(true)">
-                <div class="btn-left">
-                    <span>📜</span>
-                    <span>Community Rules</span>
-                </div>
-                <span class="btn-arrow">➔</span>
-            </button>
-
-            <!-- Social links (opens in new tab) -->
-            <a href="https://github.com/MiniBl1tz" target="_blank" rel="noopener" class="link-btn">
-                <div class="btn-left">
-                    <span>💻</span>
-                    <span>GitHub Profile</span>
-                </div>
-                <span class="btn-arrow">➔</span>
-            </a>
-
-            <a href="https://twitter.com" target="_blank" rel="noopener" class="link-btn">
-                <div class="btn-left">
-                    <span>🌐</span>
-                    <span>Community Updates (X)</span>
-                </div>
-                <span class="btn-arrow">➔</span>
-            </a>
+        <!-- Titles -->
+        <div class="title-block">
+            <h1 class="main-title" id="cfgTitle">NexusPortal</h1>
+            <p class="subtitle" id="cfgTagline">Next-generation ecosystem gateway curated by MiniBl1tz</p>
         </div>
+
+        <!-- Live Platform Telemetry -->
+        <div class="metrics-grid" id="metricsContainer"></div>
+
+        <!-- Dynamic Action Links -->
+        <div class="links-container" id="linksContainer"></div>
 
         <!-- Footer -->
-        <footer>
-            <span>Powered by <a href="https://github.com/MiniBl1tz/BlitzDash">BlitzDash</a></span>
-            <button class="share-btn" onclick="shareHub()">
-                <span>Share Hub</span> 🔗
+        <footer class="card-footer">
+            <span>Core by <a href="https://github.com/MiniBl1tz" target="_blank" id="cfgAuthor">MiniBl1tz</a></span>
+            <button class="share-pill" onclick="shareGateway()">
+                <span>Share Portal</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
             </button>
         </footer>
     </main>
 
-    <!-- Community Rules Pop-up Modal -->
-    <div class="modal-overlay" id="rulesModal" onclick="toggleRules(false)">
-        <div class="modal" onclick="event.stopPropagation()">
+    <!-- Modal Window (Community Rules) -->
+    <div class="modal-backdrop" id="rulesModal" onclick="closeRules()">
+        <div class="modal-panel" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <div class="modal-title">⚡ Community Rules</div>
-                <button class="close-btn" onclick="toggleRules(false)">&times;</button>
+                <h3>📜 Protocol Guidelines</h3>
+                <button class="modal-close" onclick="closeRules()">&times;</button>
             </div>
-            <ul class="rules-list">
-                <li><strong>1. Respect Everyone:</strong> Zero tolerance for toxicity, hate speech, or harassment.</li>
-                <li><strong>2. No Spam:</strong> Keep discussions clean, relevant, and in the right channels.</li>
-                <li><strong>3. Open Source First:</strong> Share code freely and help others learn.</li>
-                <li><strong>4. Have Fun:</strong> Build cool things and grow together!</li>
-            </ul>
+            <div class="rules-timeline" id="rulesContainer"></div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">Copied to clipboard! 🚀</div>
+    <!-- Notification Toast -->
+    <div class="toast-system" id="toast">
+        <span id="toastMsg">Action completed</span>
+    </div>
 
+    <!-- ==========================================
+         ENGINEER CONFIGURATION PANEL
+         (Modify everything right here!)
+    =========================================== -->
     <script>
-        // Copy Discord link with feedback
-        function copyDiscord() {
-            // Put your actual Discord link or tag here!
-            const inviteLink = "https://discord.gg/your-code-here";
-            
-            navigator.clipboard.writeText(inviteLink).then(() => {
-                showToast("Discord link copied to clipboard! 💬");
-            }).catch(() => {
-                showToast("Discord: MiniBl1tz#0001 (copied)");
+        const CONFIG = {
+            // General Info
+            title: "NexusPortal",
+            tagline: "High-performance community infrastructure crafted by MiniBl1tz",
+            status: "SYSTEMS ONLINE",
+            author: "MiniBl1tz",
+
+            // Real-Time Community Metrics
+            metrics: [
+                { label: "Community", value: "3.2K+" },
+                { label: "Latency", value: "14ms" },
+                { label: "Uptime", value: "99.9%" }
+            ],
+
+            // Action Links
+            // Types: "copy" (copies value to clipboard), "modal" (opens rules), "link" (opens url)
+            actions: [
+                {
+                    type: "copy",
+                    icon: "💬",
+                    label: "Join Community Discord",
+                    desc: "Click to copy official invite link",
+                    value: "https://discord.gg/pcmqpZcqQ"
+                },
+                {
+                    type: "modal",
+                    icon: "📜",
+                    label: "Community Rules & Standards",
+                    desc: "Review behavior guidelines & security policies"
+                },
+                {
+                    type: "link",
+                    icon: "💻",
+                    label: "GitHub Source & Projects",
+                    desc: "Explore public codebases and tools",
+                    url: "https://github.com/MiniBl1tz"
+                },
+                {
+                    type: "link",
+                    icon: "⚡",
+                    label: "Official Updates & Announcements",
+                    desc: "Follow the latest releases",
+                    url: "https://twitter.com"
+                }
+            ],
+
+            // Guidelines listed inside the Rules modal
+            rules: [
+                { title: "Zero Hostility", desc: "Harassment, hate speech, and bad-faith behavior are strictly prohibited." },
+                { title: "No Spam or Exploits", desc: "Do not post malicious links, automated scripts, or unsolicited ads." },
+                { title: "Knowledge Sharing", desc: "Foster an environment of open-source growth and peer learning." },
+                { title: "Verify Everything", desc: "Ensure dependencies and community scripts are reviewed before execution." }
+            ]
+        };
+
+        // --- Core Application Engine ---
+        function initPortal() {
+            // Set text items
+            document.getElementById('cfgTitle').innerText = CONFIG.title;
+            document.getElementById('cfgTagline').innerText = CONFIG.tagline;
+            document.getElementById('cfgStatus').innerText = CONFIG.status;
+            document.getElementById('cfgAuthor').innerText = CONFIG.author;
+
+            // Render Metrics
+            const metricsBox = document.getElementById('metricsContainer');
+            metricsBox.innerHTML = CONFIG.metrics.map(m => `
+                <div class="metric-item">
+                    <div class="val">${m.value}</div>
+                    <div class="lbl">${m.label}</div>
+                </div>
+            `).join('');
+
+            // Render Links
+            const linksBox = document.getElementById('linksContainer');
+            linksBox.innerHTML = CONFIG.actions.map(act => {
+                if(act.type === 'copy') {
+                    return `
+                    <div class="action-btn" onclick="copyToClipboard('${act.value}', 'Discord invite copied!')">
+                        <div class="btn-content">
+                            <div class="btn-icon">${act.icon}</div>
+                            <div class="btn-text">
+                                <div class="btn-label">${act.label}</div>
+                                <div class="btn-desc">${act.desc}</div>
+                            </div>
+                        </div>
+                        <span class="btn-chevron">📋</span>
+                    </div>`;
+                } else if(act.type === 'modal') {
+                    return `
+                    <div class="action-btn" onclick="openRules()">
+                        <div class="btn-content">
+                            <div class="btn-icon">${act.icon}</div>
+                            <div class="btn-text">
+                                <div class="btn-label">${act.label}</div>
+                                <div class="btn-desc">${act.desc}</div>
+                            </div>
+                        </div>
+                        <span class="btn-chevron">➔</span>
+                    </div>`;
+                } else {
+                    return `
+                    <a href="${act.url}" target="_blank" rel="noopener" class="action-btn">
+                        <div class="btn-content">
+                            <div class="btn-icon">${act.icon}</div>
+                            <div class="btn-text">
+                                <div class="btn-label">${act.label}</div>
+                                <div class="btn-desc">${act.desc}</div>
+                            </div>
+                        </div>
+                        <span class="btn-chevron">➔</span>
+                    </a>`;
+                }
+            }).join('');
+
+            // Render Rules
+            const rulesBox = document.getElementById('rulesContainer');
+            rulesBox.innerHTML = CONFIG.rules.map((r, idx) => `
+                <div class="rule-entry">
+                    <div class="rule-num">0${idx + 1}</div>
+                    <div>
+                        <strong style="color: var(--text-main);">${r.title}:</strong>
+                        <span style="color: var(--text-muted);">${r.desc}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Load saved theme
+            const savedTheme = localStorage.getItem('nexus_theme');
+            if(savedTheme) setTheme(savedTheme);
+        }
+
+        // --- Theme Engine ---
+        function setTheme(name) {
+            if(name === 'default') {
+                document.body.removeAttribute('data-theme');
+            } else {
+                document.body.setAttribute('data-theme', name);
+            }
+            localStorage.setItem('nexus_theme', name);
+        }
+
+        // --- Modal & Toast Handlers ---
+        function openRules() { document.getElementById('rulesModal').style.display = 'flex'; }
+        function closeRules() { document.getElementById('rulesModal').style.display = 'none'; }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = text;
+            toast.classList.add('active');
+            setTimeout(() => toast.classList.remove('active'), 2500);
+        }
+
+        function copyToClipboard(val, successMsg) {
+            navigator.clipboard.writeText(val).then(() => {
+                showToast(successMsg || "Copied to clipboard!");
             });
         }
 
-        // Toggle rules modal window
-        function toggleRules(show) {
-            const modal = document.getElementById('rulesModal');
-            modal.style.display = show ? 'flex' : 'none';
-        }
-
-        // Share API
-        function shareHub() {
+        function shareGateway() {
             if (navigator.share) {
-                navigator.share({
-                    title: '⚡ BlitzDash Community Hub',
-                    url: window.location.href
-                }).catch(() => {});
+                navigator.share({ title: CONFIG.title, url: window.location.href }).catch(() => {});
             } else {
-                navigator.clipboard.writeText(window.location.href);
-                showToast("Hub URL copied to clipboard! 🚀");
+                copyToClipboard(window.location.href, "Portal URL copied!");
             }
         }
 
-        // Display toast popup
-        function showToast(text) {
-            const toast = document.getElementById('toast');
-            toast.innerText = text;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
+        // --- Lightweight 60 FPS Canvas Particle Grid ---
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = 1.5;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 40; i++) particles.push(new Particle());
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / 120)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+
+        animateCanvas();
+        initPortal();
     </script>
 </body>
 </html>
