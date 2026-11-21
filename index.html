@@ -3,27 +3,424 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BlitzDash | Community Hub</title>
+    <title>⚡ BlitzDash | Community Hub</title>
+    
+    <!-- Meta tags for Discord / Twitter Previews -->
+    <meta name="description" content="Welcome to the official BlitzDash community hub crafted by MiniBl1tz.">
+    <meta property="og:title" content="⚡ BlitzDash Hub">
+    <meta property="og:description" content="Join our community, check the rules, and grab our latest links!">
+    <meta name="theme-color" content="#38bdf8">
+
+    <!-- Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0d1117; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .container { text-align: center; background: #161b22; padding: 40px; border-radius: 20px; border: 1px solid #30363d; box-shadow: 0 10px 30px rgba(0,0,0,0.5); width: 90%; max-width: 400px; }
-        h1 { color: #58a6ff; margin-bottom: 5px; }
-        p { color: #8b949e; margin-bottom: 25px; }
-        .btn { display: block; background: #238636; color: white; padding: 12px; margin: 10px 0; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s; }
-        .btn:hover { background: #2ea043; transform: translateY(-2px); }
-        .footer { margin-top: 20px; font-size: 12px; color: #484f58; }
+        :root {
+            --bg: #090d16;
+            --card-bg: rgba(16, 24, 39, 0.75);
+            --border: rgba(56, 189, 248, 0.2);
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.35);
+            --accent: #818cf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(129, 140, 248, 0.08) 0%, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .hub-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 36px 28px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px var(--primary-glow);
+            text-align: center;
+            position: relative;
+        }
+
+        /* Avatar / Icon */
+        .avatar-wrap {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 16px;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #38bdf8, #6366f1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 8px 24px var(--primary-glow);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--success);
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        /* Buttons List */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 14px 18px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .link-btn:hover {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        .btn-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-arrow {
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+        }
+
+        .link-btn:hover .btn-arrow {
+            transform: translateX(4px);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .share-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+        }
+
+        .share-btn:hover {
+            color: var(--text-main);
+        }
+
+        /* Modal (Rules Window) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal {
+            background: #111827;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            padding: 24px;
+            text-align: left;
+            animation: popIn 0.25s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .rules-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+
+        .rules-list li strong {
+            color: var(--text-main);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e293b;
+            color: #38bdf8;
+            border: 1px solid #38bdf8;
+            padding: 10px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>⚡ BlitzDash</h1>
-        <p>A Community Hub by <strong>MiniBl1tz</strong></p>
-        
-        <a href="#" class="btn">Join our Discord</a>
-        <a href="#" class="btn">Follow on Twitter</a>
-        <a href="#" class="btn">Community Rules</a>
-        
-        <div class="footer">Created with BlitzDash Template</div>
+
+    <main class="hub-card">
+        <!-- Community Status -->
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>Community Live</span>
+        </div>
+
+        <!-- Avatar -->
+        <div class="avatar-wrap">
+            <div class="avatar">⚡</div>
+        </div>
+
+        <h1>BlitzDash</h1>
+        <p class="subtitle">Official hub created by <strong>MiniBl1tz</strong></p>
+
+        <!-- Interactive Action Buttons -->
+        <div class="links">
+            <!-- Discord Copy Button -->
+            <button class="link-btn" onclick="copyDiscord()">
+                <div class="btn-left">
+                    <span>💬</span>
+                    <span>Copy Discord Invite</span>
+                </div>
+                <span class="btn-arrow">📋</span>
+            </button>
+
+            <!-- Rules Modal Trigger -->
+            <button class="link-btn" onclick="toggleRules(true)">
+                <div class="btn-left">
+                    <span>📜</span>
+                    <span>Community Rules</span>
+                </div>
+                <span class="btn-arrow">➔</span>
+            </button>
+
+            <!-- Social links (opens in new tab) -->
+            <a href="https://github.com/MiniBl1tz" target="_blank" rel="noopener" class="link-btn">
+                <div class="btn-left">
+                    <span>💻</span>
+                    <span>GitHub Profile</span>
+                </div>
+                <span class="btn-arrow">➔</span>
+            </a>
+
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="link-btn">
+                <div class="btn-left">
+                    <span>🌐</span>
+                    <span>Community Updates (X)</span>
+                </div>
+                <span class="btn-arrow">➔</span>
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <span>Powered by <a href="https://github.com/MiniBl1tz/BlitzDash">BlitzDash</a></span>
+            <button class="share-btn" onclick="shareHub()">
+                <span>Share Hub</span> 🔗
+            </button>
+        </footer>
+    </main>
+
+    <!-- Community Rules Pop-up Modal -->
+    <div class="modal-overlay" id="rulesModal" onclick="toggleRules(false)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">⚡ Community Rules</div>
+                <button class="close-btn" onclick="toggleRules(false)">&times;</button>
+            </div>
+            <ul class="rules-list">
+                <li><strong>1. Respect Everyone:</strong> Zero tolerance for toxicity, hate speech, or harassment.</li>
+                <li><strong>2. No Spam:</strong> Keep discussions clean, relevant, and in the right channels.</li>
+                <li><strong>3. Open Source First:</strong> Share code freely and help others learn.</li>
+                <li><strong>4. Have Fun:</strong> Build cool things and grow together!</li>
+            </ul>
+        </div>
     </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Copied to clipboard! 🚀</div>
+
+    <script>
+        // Copy Discord link with feedback
+        function copyDiscord() {
+            // Put your actual Discord link or tag here!
+            const inviteLink = "https://discord.gg/your-code-here";
+            
+            navigator.clipboard.writeText(inviteLink).then(() => {
+                showToast("Discord link copied to clipboard! 💬");
+            }).catch(() => {
+                showToast("Discord: MiniBl1tz#0001 (copied)");
+            });
+        }
+
+        // Toggle rules modal window
+        function toggleRules(show) {
+            const modal = document.getElementById('rulesModal');
+            modal.style.display = show ? 'flex' : 'none';
+        }
+
+        // Share API
+        function shareHub() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '⚡ BlitzDash Community Hub',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showToast("Hub URL copied to clipboard! 🚀");
+            }
+        }
+
+        // Display toast popup
+        function showToast(text) {
+            const toast = document.getElementById('toast');
+            toast.innerText = text;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+    </script>
 </body>
 </html>
